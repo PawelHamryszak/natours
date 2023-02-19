@@ -8,8 +8,8 @@
     "dev": "nodemon server.js",
     "start:prod": "set NODE_ENV=production&& nodemon server.js",
     "debug": "ndb server.js",
-    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
-    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url ./js"
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "author": "Paweł Hamryszak",
   "license": "ISC",
@@ -53,6 +53,6 @@
     "prettier": "^2.8.3"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": "^10"
   }
 }
