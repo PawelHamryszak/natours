@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const crypto = require('crypto'); //inbuuilt node module
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
@@ -26,56 +26,61 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: [true, 'Please provide a password'],
+    required: [true, 'Password is required'],
     minlength: 8,
-    select: false,
+    select: false, //to hide it on get req or on login post req
   },
   passwordConfirm: {
     type: String,
     required: [true, 'Please confirm your password'],
     validate: {
-      // This only works on CREATE and SAVE!!!
-      validator: function (el) {
-        return el === this.password;
+      //this validator will only run with save or create. not with /^find/ methods
+      validator: function (val) {
+        return val === this.password;
       },
-      message: 'Passwords are not the same!',
+      message: 'Passwords doesnt match',
     },
   },
   passwordChangedAt: Date,
-  passwordResetToken: String,
+  passwordResetToken: {
+    type: String,
+    select: false,
+  },
   passwordResetExpires: Date,
   active: {
     type: Boolean,
-    default: true,
+    default: true, // by default new user is active
     select: false,
   },
 });
 
-userSchema.pre('save', async function (next) {
-  // Only run this function if password was actually modified
-  if (!this.isModified('password')) return next();
-
-  // Hash the password with cost of 12
-  this.password = await bcrypt.hash(this.password, 12);
-
-  // Delete passwordConfirm field
-  this.passwordConfirm = undefined;
+//document middleware //pre-save-hook
+/* userSchema.pre('save', async function(next){
+    if(!this.isModified('password')) return(next);
+    this.password = await bcrypt.hash(this.password, 12);
+//after cofirmation we no longer need this field//althought required as an i/p but not necessarily to be persisted in db
+    this.passwordConfirm = undefined;
+    next();
+});
+//pre-save hook to update the psswordChangeAt timestamp on password change/reset/modified and updated via save()in db or to look on signup
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password') || this.isNew) {
+    return next();
+  }
+  this.passwordChangedAt = Date.now() - 1000; //fgc hackk 
   next();
 });
+ */
 
-userSchema.pre('save', function (next) {
-  if (!this.isModified('password') || this.isNew) return next();
-
-  this.passwordChangedAt = Date.now() - 1000;
-  next();
-});
-
+//pre-find querry middleware
 userSchema.pre(/^find/, function (next) {
-  // this points to the current query
+  //this points to current querry
   this.find({ active: { $ne: false } });
   next();
 });
 
+//instance method, can be accesed by the document of doc created by user model
+//candidatePassword is here this.password as this points to the curretnly processed document
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword
@@ -83,15 +88,17 @@ userSchema.methods.correctPassword = async function (
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
+//instance method to check whether the password was changed/updated after the token was generated
+//The changedPasswordAfter method is not async like the correctPassword method bcz of the bcrypt.
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
     const changedTimestamp = parseInt(
       this.passwordChangedAt.getTime() / 1000,
       10
     );
-
     return JWTTimestamp < changedTimestamp;
   }
+  //console.log ( this.passwordChangedAt, JWTTimeStamp )
 
   // False means NOT changed
   return false;
@@ -104,8 +111,8 @@ userSchema.methods.createPasswordResetToken = function () {
     .createHash('sha256')
     .update(resetToken)
     .digest('hex');
-
-  // console.log({ resetToken }, this.passwordResetToken);
+  //storing this in db for further comparison during resetPssword
+  // console.log(resetToken, this.passwordResetToken);
 
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
