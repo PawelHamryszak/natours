@@ -53,10 +53,7 @@
     "eslint-plugin-react": "^7.32.1",
     "prettier": "^2.8.3"
   },
-  "resolutions": {
-    "node-forge": "0.10.0"
-  },
   "engines": {
-    "node": ">=12.0.0"
+    "node": "18.12.1"
   }
 }
