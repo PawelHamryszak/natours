@@ -1,18 +1,15 @@
 {
   "name": "natours",
   "version": "1.0.0",
-  "main": "app.js",
   "description": "Learning node, express and mongoDB",
-  "targets": {
-    "main": false
-  },
+  "main": "app.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "start:prod": "SET NODE_ENV=production&&nodemon server.js",
+    "start:prod": "set NODE_ENV=production&& nodemon server.js",
     "debug": "ndb server.js",
-    "build:js": "parcel build ./public/js/index.js --dist-dir ./public/js/bundled",
-    "watch:js": "parcel watch ./public/js/index.js --dist-dir ./public/js/bundled"
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url /js",
+    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js --public-url ./js"
   },
   "author": "Paweł Hamryszak",
   "license": "ISC",
@@ -55,6 +52,9 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.1",
     "prettier": "^2.8.3"
+  },
+  "resolutions": {
+    "node-forge": "0.10.0"
   },
   "engines": {
     "node": ">=12.0.0"
