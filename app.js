@@ -17,6 +17,8 @@ const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
+app.enable('trust proxy');
+
 const app = express();
 
 app.set('view engine', 'pug');
