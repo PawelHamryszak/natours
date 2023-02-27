@@ -39,7 +39,7 @@ https://user-images.githubusercontent.com/105717616/221445469-588afb8a-a8a0-43d8
 
 ### Book a tour
 
-* Login to the site. Email adress you can find in this [file](https://github.com/PawelHamryszak/natours/blob/master/dev-data/data/users.json)
+* Login to the site. Email adress you can find in this [file](https://github.com/PawelHamryszak/natours/blob/master/dev-data/data/users.json). Password for all users is: test1234
 * Search for tours that you want to book
 * Book a tour
 * Proceed to the payment checkout page
@@ -50,8 +50,57 @@ Enter the card details (Test Mood):
 - Expiry date: 02 / 22
 - CVV: 222
 ```
-
 * Finished!
+
+### Manage your booking
+* Check the tour you have booked in "Manage Booking" page in your user settings. You'll be automatically redirected to this page after you have completed the booking.
+
+### Update your profile
+* You can update your own username, profile photo, email and password.
+
+## API Usage
+```
+- {{URL}} with your hostname as value (Eg. http://127.0.0.1:3000 or http://www.example.com)
+- {{password}} with your user password as value.
+```
+
+## Build With
+* NodeJS - JS runtime environment
+* Express - The web framework used
+* Mongoose - Object Data Modelling (ODM) library
+* MongoDB Atlas - Cloud database service
+* Pug - High performance template engine
+* JSON Web Token - Security token
+* ParcelJS - Blazing fast, zero configuration web application bundler
+* Stripe - Online payment API
+* Postman - API testing
+* Mailtrap & Sendgrid - Email delivery platform
+* Render - Cloud platform
+
+## Installation
+
+```
+$ npm i
+set your env variables
+$ npm run watch:js
+$ npm run build:js
+$ npm run dev (for development)
+$ npm run start:prod (for production)
+$ npm run debug (for debug)
+$ npm run start
+Setting up ESLint and Prettier in VS Code 👇
+$ npm i eslint prettier eslint-config-prettier eslint-plugin-prettier eslint-config-airbnb eslint-plugin-node
+eslint-plugin-import eslint-plugin-jsx-a11y  eslint-plugin-react --save-dev
+```
+
+## Acknowledgement
+
+* This project is part of the online course I've taken at Udemy. Thanks to Jonas Schmedtmann for creating this awesome course! Link to the course: [Node.js, Express, MongoDB & More: The Complete Bootcamp 2019](https://www.udemy.com/course/nodejs-express-mongodb-bootcamp/)
+
+
+
+
+
 
 
 
