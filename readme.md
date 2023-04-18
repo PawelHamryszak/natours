@@ -45,7 +45,7 @@ https://user-images.githubusercontent.com/105717616/221445469-588afb8a-a8a0-43d8
 * Proceed to the payment checkout page
 
 ```
-Enter the card details (Test Mood):
+Enter the card details (Test Mod):
 - Card No. : 4242 4242 4242 4242
 - Expiry date: 02 / 22
 - CVV: 222
